@@ -17,14 +17,14 @@ llm_model = "TheBloke/Llama-2-7B-fp16"
 llm_adapter = "IlyaGusev/saiga2_7b_lora"
 
 # Embedding model
-embedding_model="sentence-transformers/all-MiniLM-L6-v2"
+embedding_model="cointegrated/rubert-tiny2"
 
 
 tokenizer = AutoTokenizer.from_pretrained(embedding_model)
 model = AutoModel.from_pretrained(embedding_model)
 
-bentoml.transformers.save_model("all-MiniLM-L6-v2", model)
-bentoml.transformers.save_model("all-MiniLM-L6-v2-tokenizer", tokenizer)
+bentoml.transformers.save_model("rubert-tiny2", model)
+bentoml.transformers.save_model("rubert-tiny2-tokenizer", tokenizer)
 
 llm = openllm.LLM(llm_model, backend='pt', adapter_map={llm_adapter:"ru"})
 llm.save_pretrained()
@@ -49,7 +49,7 @@ def download(_: bentoml.Context):
 async def prompt(input_text: str) -> str:
     if verbose:
         print(f"GOT TEXT: {input_text}", flush=True, end='')
-    answer = await llm.generate(input_text, adapter_name="ru", stop_token_ids=[2], max_new_tokens=1024)
+    answer = await llm.generate(input_text, adapter_name="ru", stop_token_ids=[2], max_new_tokens=256)
     if verbose:
         print(f"GEN TEXT: {answer.outputs[0].text}", flush=True, end='')
     return answer.outputs[0].text

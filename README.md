@@ -4,7 +4,7 @@ A lawyer bot for Russian laws and codecs
 A basic RAG bot for QA on Russian codecs. 
 
 - [x] inference server with Llama 2 and Russian LoRA
-- [ ] russian text embedder inference
+- [x] russian text embedder inference
 - [x] basic chatbot application with chainlit
 - [ ] scrap russian lawyer books, codecs and articles
 - [ ] create database server

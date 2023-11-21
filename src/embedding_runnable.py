@@ -7,8 +7,8 @@ from typing import TYPE_CHECKING, List
 if TYPE_CHECKING:
     import numpy.typing as npt
 
-MODEL_TAG="all-MiniLM-L6-v2:latest"
-TOKENIZER_TAG="all-MiniLM-L6-v2-tokenizer:latest"
+MODEL_TAG="rubert-tiny2:latest"
+TOKENIZER_TAG="rubert-tiny2-tokenizer:latest"
 
 class SentenceEmbeddingRunnable(bentoml.Runnable):
     SUPPORTED_RESOURCES = ("nvidia.com/gpu", "cpu")
@@ -43,7 +43,7 @@ class SentenceEmbeddingRunnable(bentoml.Runnable):
         )
 
         # Optional: Normalize embeddings if needed
-        # sentence_embeddings = torch.nn.functional.normalize(sentence_embeddings, p=2, dim=1)
+        sentence_embeddings = torch.nn.functional.normalize(sentence_embeddings, p=2, dim=1)
         
         return sentence_embeddings.cpu().numpy()
 
